@@ -19,16 +19,20 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-surround'
 Plugin 'klen/python-mode'
+Plugin 'flazz/vim-colorschemes'
 
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 " Colors----------------------------------------------------------------------
-set background=dark
-colorscheme solarized
+
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 
 syntax enable
+colorscheme badwolf
 
 " Spaces and tabs------------------------------------------------------------
 set tabstop=4
@@ -42,7 +46,6 @@ set shiftround
 "" UI Config
 set number
 set showcmd
-set cursorline
 filetype indent on
 set wildmenu
 set lazyredraw
@@ -86,15 +89,23 @@ nnoremap <leader>s :mksession<CR>
 nnoremap <leader>a :Ag
 
 " Saving--------------------------------------------------------------------
+nnoremap <silent> <C-s> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
 nmap <C-s> :w<CR>
-vmap <C-s> <Esc><C-s>gv
+vmap <C-s> <Esc><C-s><CR>gv
 imap <C-s> <Esc><C-s>
+
+nnoremap <silent> <C-q> :if expand("%") == ""<CR>browse confirm q<CR>else<CR>confirm q<CR>endif<CR>
+nmap <C-q> :q<CR>
+vmap <C-q> <Esc>:q<CR>gv
+imap <C-q> <Esc>:q<CR>
 
 " CtrlP---------------------------------------------------------------------
 let g:ctrlp_match_window='bottom,order:ttb'
 let g:ctrlp_switch_buffer=0
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_user_command='ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_working_path_mode='ra'
+"let g:ctrlp_user_command='ag %s -l --nocolor --hidden -g '
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 " NERDTree-----------------------------------------------------------------
 autocmd vimenter * NERDTree
@@ -123,8 +134,6 @@ endif
 augroup configgroup
     autocmd!
     autocmd VimEnter * highlight clear SignColumn
-    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
-                \:call <SID>StripTrailingWhitespaces()
     autocmd FileType java setlocal noexpandtab
     autocmd FileType java setlocal list
     autocmd FileType java setlocal listchars=tab:+\ ,eol:-
@@ -138,6 +147,7 @@ augroup configgroup
     autocmd FileType ruby setlocal softtabstop=2
     autocmd FileType ruby setlocal commentstring=#\ %s
     autocmd FileType python setlocal commentstring=#\ %s
+    autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2
     autocmd BufEnter *.cls setlocal filetype=java
     autocmd BufEnter *.zsh-theme setlocal filetype=zsh
     autocmd BufEnter Makefile setlocal noexpandtab
@@ -163,15 +173,3 @@ function! ToggleNumber()
         set relativenumber
     endif
 endfunc
-
-" strips trailing whitespace at the end of files. this
-" is called on buffer write in the autogroup above.
-function! <SID>StripTrailingWhitespaces()
-    " save last search & cursor position
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    let @/=_s
-    call cursor(l, c)
-endfunction
