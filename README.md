@@ -9,6 +9,6 @@ Install Commands:
     
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     
-    cp .vimconfig/vimrc ~/.vimrc
+    cp vim-configuration/vimrc ~/.vimrc
     
     vim +PluginInstall +qall
