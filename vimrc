@@ -20,7 +20,11 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-surround'
 Plugin 'klen/python-mode'
 Plugin 'flazz/vim-colorschemes'
-
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'mattn/emmet-vim'
+Plugin 'skammer/vim-css-color'
+Plugin 'Valloric/MatchTagAlways'
+Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -32,7 +36,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 syntax enable
-colorscheme badwolf
+colorscheme jellybeans
 
 " Spaces and tabs------------------------------------------------------------
 set tabstop=4
@@ -129,6 +133,13 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+" JSDoc---------------------------------------------------------------------
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_additional_descriptions=1
+
+" VIM-CSS-COLOR-------------------------------------------------------------
+let g:cssColorVimDoNotMessMyUpdateTime=1
 
 " Autogroups----------------------------------------------------------------
 augroup configgroup
