@@ -7,7 +7,7 @@ Install Commands (assumes you are linux system):
 
     git clone https://github.com/bjurgess1/vim-configuration.git
     
-    ln -s ~/vim-configruation/vim ~/.vim
+    ln -s ~/vim-configuration/vim ~/.vim
 
     ln -s ~/vim-configuration/vimrc ~/.vimrc
     
